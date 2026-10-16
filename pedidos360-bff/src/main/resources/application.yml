@@ -1,0 +1,48 @@
+spring:
+  # Conexión a RabbitMQ. Por defecto apunta a tu máquina (localhost, guest/guest).
+  # Cuando exista la instancia EC2 NO se edita este archivo: se definen las
+  # variables de entorno RABBITMQ_HOST, RABBITMQ_USER y RABBITMQ_PASSWORD.
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+    virtual-host: ${RABBITMQ_VHOST:/}
+
+# ---------------------------------------------------------------------------
+# Topología de mensajería (única fuente de nombres: ninguna clase Java escribe
+# nombres de colas, exchanges ni routing keys a mano).
+#
+#   pedidos360.exchange (direct) --routing key--> cola principal
+#   cola principal --mensaje rechazado/expirado--> pedidos360.dlx (topic)
+#   pedidos360.dlx --dlq-routing-key--> cola DLQ
+# ---------------------------------------------------------------------------
+pedidos360:
+  rabbitmq:
+    exchange: pedidos360.exchange   # Exchange normal (direct)
+    dlx: pedidos360.dlx             # Dead Letter Exchange (topic)
+
+    # Mensajes con routing key sin binding: exchange alternativo (fanout) + cola
+    unroutable-exchange: pedidos360.unroutable
+    unroutable-queue: pedidos.noruteados
+
+    # Registro de pedidos nuevos
+    registro:
+      queue: pedidos.registro
+      routing-key: pedido.registro
+      dlq: pedidos.registro.dlq
+      dlq-routing-key: dlq.pedido.registro
+
+    # Notificaciones al cliente (cambios de estado, confirmaciones)
+    notificaciones:
+      queue: pedidos.notificaciones
+      routing-key: pedido.notificacion
+      dlq: pedidos.notificaciones.dlq
+      dlq-routing-key: dlq.pedido.notificacion
+
+    # Generación de tickets de despacho
+    tickets:
+      queue: pedidos.tickets
+      routing-key: pedido.ticket
+      dlq: pedidos.tickets.dlq
+      dlq-routing-key: dlq.pedido.ticket
