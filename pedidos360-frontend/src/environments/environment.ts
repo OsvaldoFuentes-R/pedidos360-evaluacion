@@ -1,7 +1,6 @@
 export const environment = {
   production: false,
-  // Agrega tu URL del backend aquí (puedes usar la IP de tu EC2 o el API Gateway)
-  apiUrl: 'http://54.197.57.198:8080/api', 
+  apiUrl: 'http://34.238.72.98:8080/api', 
   msalConfig: {
     auth: {
       clientId: 'd1a052a1-66c7-4847-b5e2-46fdb86c94f6', 
