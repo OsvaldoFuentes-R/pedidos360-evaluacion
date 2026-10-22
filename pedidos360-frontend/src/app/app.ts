@@ -2,6 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MsalService } from '@azure/msal-angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 @Component({
   imports: [RouterOutlet],
@@ -76,8 +77,8 @@ export class App implements OnInit {
           'Content-Type': 'application/json'
         });
 
-        // Consumimos el backend protegido enviando el token en la mano
-        this.http.get<any[]>('http://localhost:8080/api/pedidos', { headers }).subscribe({
+        // Consumimos el backend en la nube (AWS)
+        this.http.get<any[]>(`${environment.apiUrl}/pedidos`, { headers }).subscribe({
           next: (data) => {
             this.pedidos = data;
             console.log('Pedidos recibidos desde Spring Boot:', data);
