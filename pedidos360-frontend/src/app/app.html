@@ -1,72 +1,83 @@
 @if (!isIframe) {
-  <div style="min-height: 100vh; background-color: #f8f9fa; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #333;">
+  <div style="min-height: 100vh; background-color: #f4f6f9; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: #2c3e50;">
     
-    <!-- Header / Barra Superior -->
-    <header style="background-color: #002b49; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-      <h2 style="margin: 0; font-size: 22px; font-weight: 600;">📦 Pedidos360 Enterprise</h2>
+    <!-- Barra de navegación superior corporativa -->
+    <header style="background: linear-gradient(135deg, #002b49 0%, #004578 100%); color: white; padding: 18px 40px; display: flex; justifyContent: space-between; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-size: 26px;">⚡</span>
+        <div>
+          <h1 style="margin: 0; font-size: 20px; font-weight: 700; letter-spacing: 0.5px;">Pedidos360</h1>
+          <p style="margin: 0; font-size: 12px; color: #a0aec0;">Sistema de Integración Cloud & RabbitMQ</p>
+        </div>
+      </div>
       
       @if (isLoggedIn) {
-        <div style="display: flex; align-items: center; gap: 15px;">
-          <span style="font-size: 14px;">👤 <strong>{{ userName }}</strong></span>
-          <button (click)="logout()" style="padding: 6px 14px; cursor: pointer; background-color: #d13438; color: white; border: none; border-radius: 4px; font-size: 13px; font-weight: 600;">
+        <div style="display: flex; align-items: center; gap: 20px;">
+          <div style="background: rgba(255, 255, 255, 0.1); padding: 6px 14px; border-radius: 20px; font-size: 13px; display: flex; align-items: center; gap: 8px;">
+            <span style="width: 8px; height: 8px; background-color: #48bb78; border-radius: 50%; display: inline-block;"></span>
+            <span>{{ userName }}</span>
+          </div>
+          <button (click)="logout()" style="padding: 7px 16px; cursor: pointer; background-color: rgba(229, 62, 62, 0.2); color: #fff; border: 1px solid #e53e3e; border-radius: 6px; font-size: 13px; font-weight: 600; transition: all 0.2s;">
             Cerrar sesión
           </button>
         </div>
       }
     </header>
 
-    <!-- Contenido Principal -->
-    <main style="max-width: 900px; margin: 40px auto; padding: 0 20px;">
+    <!-- Contenedor principal -->
+    <main style="max-width: 960px; margin: 40px auto; padding: 0 20px;">
       
       @if (!isLoggedIn) {
-        <div style="background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); text-align: center;">
-          <h1 style="color: #002b49; margin-bottom: 10px;">Bienvenido a Pedidos360</h1>
-          <p style="color: #666; margin-bottom: 30px;">Plataforma centralizada de gestión de pedidos y trazabilidad en la nube.</p>
-          <button (click)="login()" style="padding: 12px 24px; cursor: pointer; background-color: #0078D4; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: 600; box-shadow: 0 2px 4px rgba(0,120,212,0.3);">
-            Iniciar sesión con Microsoft CIAM
+        <div style="background: white; padding: 50px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); text-align: center; border: 1px solid #e2e8f0;">
+          <div style="font-size: 48px; margin-bottom: 20px;">🔒</div>
+          <h2 style="color: #1a202c; margin-top: 0; font-size: 24px;">Autenticación Requerida</h2>
+          <p style="color: #718096; margin-bottom: 30px; font-size: 15px;">Inicia sesión con tu cuenta corporativa de Microsoft Azure CIAM para acceder al panel de trazabilidad.</p>
+          <button (click)="login()" style="padding: 14px 28px; cursor: pointer; background-color: #0078D4; color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; box-shadow: 0 4px 12px rgba(0,120,212,0.3); transition: transform 0.1s;">
+            Iniciar sesión con Microsoft
           </button>
         </div>
       } @else {
-        <div style="background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+        <div style="background: white; padding: 35px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
           
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eaeaea; padding-bottom: 20px; margin-bottom: 20px;">
+          <!-- Cabecera del panel -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f7fafc; padding-bottom: 20px; margin-bottom: 25px;">
             <div>
-              <h2 style="margin: 0 0 5px 0; color: #002b49;">Panel de Control Logístico</h2>
+              <h2 style="margin: 0 0 6px 0; color: #1a202c; font-size: 22px;">Panel de Monitoreo de Pedidos</h2>
               @if (userRoles.length > 0) {
-                <span style="background: #e1dfdd; padding: 3px 8px; border-radius: 12px; font-size: 12px; font-weight: 600; color: #323130;">Rol: {{ userRoles.join(', ') }}</span>
+                <span style="background: #edf2f7; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; color: #4a5568; border: 1px solid #e2e8f0;">Rol: {{ userRoles.join(', ') }}</span>
               }
             </div>
             
-            <button (click)="obtenerPedidos()" style="padding: 10px 20px; cursor: pointer; background-color: #107c10; color: white; border: none; border-radius: 6px; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
-              🔄 Consultar Pedidos AWS
+            <button (click)="obtenerPedidos()" style="padding: 11px 22px; cursor: pointer; background-color: #2f855a; color: white; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(47,133,90,0.2); transition: background 0.2s;">
+              🔄 Sincronizar Pedidos AWS
             </button>
           </div>
 
-          <!-- Tabla de Pedidos -->
+          <!-- Tabla de Datos -->
           @if (pedidos.length > 0) {
-            <div style="overflow-x: auto;">
-              <table style="width: 100%; border-collapse: collapse; text-align: left; margin-top: 10px;">
+            <div style="overflow-x: auto; border-radius: 8px; border: 1px solid #e2e8f0;">
+              <table style="width: 100%; border-collapse: collapse; text-align: left; background: white;">
                 <thead>
-                  <tr style="background-color: #f3f2f1; color: #323130; border-bottom: 2px solid #edebe9;">
-                    <th style="padding: 12px; font-size: 14px;">ID</th>
-                    <th style="padding: 12px; font-size: 14px;">Producto / Descripción</th>
-                    <th style="padding: 12px; font-size: 14px;">Estado Actual</th>
+                  <tr style="background-color: #f8fafc; color: #4a5568; border-bottom: 2px solid #e2e8f0;">
+                    <th style="padding: 14px 18px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">ID Pedido</th>
+                    <th style="padding: 14px 18px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Descripción del Producto</th>
+                    <th style="padding: 14px 18px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px;">Estado Logístico</th>
                   </tr>
                 </thead>
                 <tbody>
                   @for (pedido of pedidos; track pedido.id) {
-                    <tr style="border-bottom: 1px solid #edebe9;">
-                      <td style="padding: 12px; color: #605e57; font-weight: 600;">#{{ pedido.id }}</td>
-                      <td style="padding: 12px; color: #201f1e; font-weight: 500;">{{ pedido.producto }}</td>
-                      <td style="padding: 12px;">
+                    <tr style="border-bottom: 1px solid #f1f5f9; transition: background 0.2s;">
+                      <td style="padding: 14px 18px; color: #718096; font-weight: 700;">#{{ pedido.id }}</td>
+                      <td style="padding: 14px 18px; color: #2d3748; font-weight: 600;">{{ pedido.producto }}</td>
+                      <td style="padding: 14px 18px;">
                         <span [style.background-color]="
-                          pedido.estado === 'Entregado' ? '#dff6dd' : 
-                          pedido.estado === 'En tránsito' ? '#fff4ce' : '#fde7e9'"
+                          pedido.estado === 'Entregado' ? '#def7ec' : 
+                          pedido.estado === 'En tránsito' ? '#fef3c7' : '#fde8e8'"
                               [style.color]="
-                          pedido.estado === 'Entregado' ? '#107c10' : 
-                          pedido.estado === 'En tránsito' ? '#8a6116' : '#a80000'"
-                              style="padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600;">
-                          {{ pedido.estado }}
+                          pedido.estado === 'Entregado' ? '#03543f' : 
+                          pedido.estado === 'En tránsito' ? '#92400e' : '#9b1c1c'"
+                              style="padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; display: inline-block; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.05);">
+                          ● {{ pedido.estado }}
                         </span>
                       </td>
                     </tr>
@@ -75,8 +86,9 @@
               </table>
             </div>
           } @else {
-            <div style="text-align: center; padding: 40px; color: #605e57;">
-              <p style="font-size: 15px; margin: 0;">No hay datos sincronizados. Haz clic en <strong>"Consultar Pedidos AWS"</strong> para sincronizar con el BFF y RabbitMQ.</p>
+            <div style="text-align: center; padding: 50px 20px; background: #f8fafc; border-radius: 8px; border: 2px dashed #cbd5e1;">
+              <p style="font-size: 15px; color: #64748b; margin: 0 0 8px 0; font-weight: 500;">No hay registros sincronizados en pantalla.</p>
+              <p style="font-size: 13px; color: #94a3b8; margin: 0;">Haz clic en <strong>"Sincronizar Pedidos AWS"</strong> para obtener la data en tiempo real desde el BFF.</p>
             </div>
           }
 
